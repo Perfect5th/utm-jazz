@@ -1,1 +1,5 @@
-console.log('hello world');
+import UTM from './utm';
+
+const utm = new UTM();
+
+console.log(utm);
