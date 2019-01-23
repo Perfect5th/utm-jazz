@@ -1,3 +1,2 @@
-import UTM from './utm';
-
-export default UTM;
+export {default} from './utm';
+export * from './directions';
