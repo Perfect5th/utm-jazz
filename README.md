@@ -11,6 +11,7 @@
 After cloning the repository, change directories into it and install the single dependency, [parcel](https://parceljs.org), like so:
 
     $ cd utm-jazz
+    $ nvm use     # if you're using nvm
     $ npm install
 
 To run the project:
