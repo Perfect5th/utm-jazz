@@ -18,6 +18,8 @@ To run the project:
 
     $ npm run dev
 
+Then visit http://localhost:1234 in your browser
+
 To build for deployment:
 
     $ npm run build
