@@ -32,8 +32,6 @@ export default class UTM {
       this.move();
       this.changeState();
     }
-
-    console.log(this.tape);
   }
 
   // MODIFIES: this
