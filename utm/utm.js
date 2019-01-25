@@ -7,7 +7,8 @@ export default class UTM {
   //              write: <symbol>,
   //              move: <direction>,
   //              state: <state>
-  //            }
+  //            },
+  //            ...
   //          }
   //          2D array tape
   //          positive int operationCount
@@ -23,7 +24,7 @@ export default class UTM {
   }
 
   // MODIFIES: this
-  // EFFECTS: performs a number of operations equal to operationCount.
+  // EFFECTS: performs a number of operations equal to operationCount
   begin() {
     for (let i = 0; i < this.operationCount; i++) {
       this.read();
@@ -116,4 +117,5 @@ export default class UTM {
 
   // getters
   getState() { return this.state; }
+  getTape() { return this.tape; }
 }
