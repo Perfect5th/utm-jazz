@@ -13,5 +13,9 @@
   "license": "MIT",
   "devDependencies": {
     "parcel-bundler": "^1.11.0"
+  },
+  "xo": {
+    "space": 2,
+    "globals": ["document"]
   }
 }

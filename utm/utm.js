@@ -61,7 +61,6 @@ export default class UTM {
       case directions.LEFT:
         return this.moveLeft();
       default:
-        return;
     }
   }
 
@@ -113,7 +112,12 @@ export default class UTM {
     this.state = parseInt(newState, 10);
   }
 
-  // getters
-  getState() { return this.state; }
-  getTape() { return this.tape; }
+  // Getters
+  getState() {
+    return this.state;
+  }
+
+  getTape() {
+    return this.tape;
+  }
 }

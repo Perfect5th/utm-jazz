@@ -1,11 +1,12 @@
-import UTM from './utm';
-import {directions} from './utm';
+import UTM, {directions} from './utm';
 
 const OUTPUT_CLASS = 'tape-snapshot';
 
-const tape = [[0, 0, 0, 0],
-              [0, 0, 0, 0],
-              [0, 0, 0, 0]];
+const tape = [
+  [0, 0, 0, 0],
+  [0, 0, 0, 0],
+  [0, 0, 0, 0]
+];
 
 document.addEventListener('DOMContentLoaded', () => {
   const utm = new UTM({
@@ -33,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const rowElement = document.createElement('div');
 
       rowElement.textContent = row.toString();
-      acc.appendChild(rowElement);
+      acc.append(rowElement);
 
       return acc;
     }, document.createElement('div'));
@@ -43,11 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
     return element;
   };
 
-  document.getElementById('begin-button').addEventListener('click', () => {
+  document.querySelector('#begin-button').addEventListener('click', () => {
     utm.begin();
 
-    document.getElementById('turing-tape').appendChild(tapeElement());
+    document.querySelector('#turing-tape').append(tapeElement());
   });
 
-  document.getElementById('turing-tape').appendChild(tapeElement());
+  document.querySelector('#turing-tape').append(tapeElement());
 });
