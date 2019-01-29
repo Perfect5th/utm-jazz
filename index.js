@@ -2,11 +2,15 @@ import UTM, {directions} from './utm';
 
 const OUTPUT_CLASS = 'tape-snapshot';
 
-const tape = [
-  [0, 0, 0, 0],
-  [0, 0, 0, 0],
-  [0, 0, 0, 0]
-];
+const tape = [];
+
+for (let i = 0; i < 4; i++) {
+  tape[i] = [];
+
+  for (let j = 0; j < 8; j++) {
+    tape[i][j] = 0;
+  }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const utm = new UTM({
