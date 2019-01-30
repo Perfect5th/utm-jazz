@@ -4,6 +4,7 @@ const OUTPUT_CLASS = 'tape-snapshot';
 
 const tape = [];
 
+// Initialize the tap as 4 by 8, full of zeroes.
 for (let i = 0; i < 4; i++) {
   tape[i] = [];
 
@@ -12,7 +13,12 @@ for (let i = 0; i < 4; i++) {
   }
 }
 
+// Once the DOM has loaded:
+// - create a utm object
+// - display the initial tape
+// - run the utm each time the button is pushed, then display tape
 document.addEventListener('DOMContentLoaded', () => {
+  // Create a utm object with a machine table
   const utm = new UTM({
     0: {
       0: {
@@ -33,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, tape, 10);
 
+  // Function that displays the current state of the tap in an HTML div
   const tapeElement = () => {
     const element = utm.getTape().reduce((acc, row) => {
       const rowElement = document.createElement('div');
@@ -48,11 +55,14 @@ document.addEventListener('DOMContentLoaded', () => {
     return element;
   };
 
+  // Run the utm every time the button is clicked, then display the new tape
+  // state
   document.querySelector('#begin-button').addEventListener('click', () => {
     utm.begin();
 
     document.querySelector('#turing-tape').append(tapeElement());
   });
 
+  // Display the initial tape state
   document.querySelector('#turing-tape').append(tapeElement());
 });
