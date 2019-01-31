@@ -16,6 +16,8 @@
   },
   "xo": {
     "space": 2,
-    "globals": ["document"]
+    "globals": [
+      "document"
+    ]
   }
 }
