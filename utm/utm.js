@@ -3,7 +3,7 @@ import {directions} from './directions';
 export default class UTM {
   // REQUIRES plain Object machineTable of the shape
   //          {
-  //            <state>: 
+  //            <state>:
   //              <read_symbol>: {
   //                write: <symbol>,
   //                move: <direction>,

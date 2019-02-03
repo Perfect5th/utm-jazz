@@ -1,3 +1,4 @@
+import Jazz from './jazz';
 import UTM, {directions} from './utm';
 
 const OUTPUT_CLASS = 'tape-snapshot';
@@ -65,4 +66,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Display the initial tape state
   document.querySelector('#turing-tape').append(tapeElement());
+
 });
