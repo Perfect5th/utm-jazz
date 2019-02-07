@@ -9,7 +9,7 @@ export default class Jazz {
     this.playing = false;
 
     this.secondsPerNote = 0.25;
-    this.noteStop = 0.99;
+    this.attack = 0.1;
   }
 
   // REQUIRES: a 2D musical staff: a collection of Notes
@@ -60,16 +60,15 @@ export default class Jazz {
   // MODIFIES: oscillator
   // EFFECTS: adds an un-tied note tone to the oscillator
   createTone(oscillator, frequency, i) {
-    oscillator.gainNode.gain.linearRampToValueAtTime(1, i * this.secondsPerNote);
+    oscillator.gainNode.gain.linearRampToValueAtTime(0.01, i * this.secondsPerNote);
+    oscillator.gainNode.gain.linearRampToValueAtTime(1, (i + this.attack) * this.secondsPerNote);
     oscillator.frequency.setValueAtTime(frequency, i * this.secondsPerNote);
-    oscillator.gainNode.gain.linearRampToValueAtTime(0.001, (i + this.noteStop) * this.secondsPerNote);
-    oscillator.stop((i + this.noteStop) * this.secondsPerNote);
+    oscillator.stop((i + 1) * this.secondsPerNote);
   }
 
   createTiedTone(oscillator, frequency, i) {
-    oscillator.gainNode.gain.linearRampToValueAtTime(1, i * this.secondsPerNote);
     oscillator.frequency.setValueAtTime(frequency, i * this.secondsPerNote);
-    oscillator.stop((i + this.noteStop) * this.secondsPerNote);
+    oscillator.stop((i + 1) * this.secondsPerNote);
   }
 
   // MODIFIES: this
