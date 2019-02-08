@@ -83,7 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.querySelector('#start')
-    .addEventListener('click', () => jazz.play(notesStaff));
+    .addEventListener('click', () => {
+      jazz.stop();
+      jazz.play(notesStaff);
+    });
 
   document.querySelector('#stop').addEventListener('click', () => jazz.stop());
 });

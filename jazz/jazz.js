@@ -100,7 +100,11 @@ export default class Jazz {
     }
 
     this.oscillators = [];
-    this.context.suspend();
+
+    if (this.context) {
+      this.context.suspend();
+    }
+
     this.playing = false;
   }
 }
