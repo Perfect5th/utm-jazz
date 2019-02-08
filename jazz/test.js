@@ -3,7 +3,7 @@ import Jazz from './jazz';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Testing the player now
-  const jazz = new Jazz(['triangle', 'triangle']);
+  const jazz = new Jazz(['chiptune', 'triangle']);
 
   const hertzStaff = [
     [

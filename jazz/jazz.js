@@ -1,3 +1,5 @@
+import oscillators from 'web-audio-oscillators';
+
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 
 export default class Jazz {
@@ -29,7 +31,7 @@ export default class Jazz {
   createOscillators(staff) {
     for (let i = 0; i < staff.length; i++) {
       const stem = staff[i];
-      const oscillator = this.context.createOscillator();
+      const oscillator = oscillators[this.oscillatorTypes[i]](this.context);
       const gainNode = this.context.createGain();
 
       oscillator.type = this.oscillatorTypes[i];
@@ -65,7 +67,7 @@ export default class Jazz {
   createTone(oscillator, frequency, i) {
     const {gain} = oscillator.gainNode;
 
-    gain.linearRampToValueAtTime(0.01, i * this.secondsPerNote);
+    gain.linearRampToValueAtTime(0.001, i * this.secondsPerNote);
     gain.linearRampToValueAtTime(1, (i + this.attack) * this.secondsPerNote);
     gain.setValueAtTime(1, (i + this.noteLength) * this.secondsPerNote);
     oscillator.frequency.setValueAtTime(frequency, i * this.secondsPerNote);
