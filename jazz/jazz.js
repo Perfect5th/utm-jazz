@@ -55,10 +55,14 @@ export default class Jazz {
         creationMethod = this.createTiedTone.bind(this);
       }
 
+      if (stem[i].frequency === 0) {
+        creationMethod = this.createRest.bind(this);
+      }
+
       creationMethod(oscillator, stem[i].frequency, i);
     }
 
-    this.createRest(oscillator, stem.length);
+    this.createRest(oscillator, 0, stem.length);
   }
 
   // REQUIRES: oscillator, frequency: float, i: position
@@ -85,7 +89,7 @@ export default class Jazz {
   // REQUIRES: oscillator, i: position
   // MODIFIES: oscillator
   // EFFECTS: adds silence/rest to the oscillator
-  createRest(oscillator, i) {
+  createRest(oscillator, frequency, i) {
     const {gain} = oscillator.gainNode;
 
     gain.linearRampToValueAtTime(0.01, i * this.secondsPerNote);
