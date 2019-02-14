@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html --open"
   },
   "keywords": [],
   "author": "Mitchell Burton",
@@ -19,5 +19,8 @@
     "globals": [
       "document"
     ]
+  },
+  "dependencies": {
+    "web-audio-oscillators": "^1.0.4"
   }
 }
