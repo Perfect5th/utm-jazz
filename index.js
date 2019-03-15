@@ -1,11 +1,11 @@
-import Jazz from './jazz';
+import Jazz, {NoteTranslator} from './jazz';
 import UTM, {directions} from './utm';
 
 const OUTPUT_CLASS = 'tape-snapshot';
 
 const tape = [];
 
-// Initialize the tap as 4 by 8, full of zeroes.
+// Initialize the tape as 4 by 8, full of zeroes.
 for (let i = 0; i < 4; i++) {
   tape[i] = [];
 
@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   }, tape, 10);
+  const jazz = new Jazz(['organ', 'bass', 'chiptune', 'bass']);
 
   // Function that displays the current state of the tap in an HTML div
   const tapeElement = () => {
@@ -61,10 +62,15 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('#begin-button').addEventListener('click', () => {
     utm.begin();
 
+    const noteTranslator = new NoteTranslator(utm.getTape());
+    noteTranslator.translate();
+    const freqs = noteTranslator.getFreq();
+
+    jazz.play(freqs);
+
     document.querySelector('#turing-tape').append(tapeElement());
   });
 
   // Display the initial tape state
   document.querySelector('#turing-tape').append(tapeElement());
-
 });
