@@ -1,5 +1,5 @@
 import Jazz, {NoteTranslator} from './jazz';
-import UTM, {directions} from './utm';
+import UTM from './utm';
 
 const OUTPUT_CLASS = 'tape-snapshot';
 
@@ -20,7 +20,7 @@ for (let i = 0; i < 4; i++) {
 // - run the utm each time the button is pushed, then display tape
 document.addEventListener('DOMContentLoaded', () => {
   // Create a utm object with a machine table
-  const utm = new UTM(tape, 20, 2);
+  const utm = new UTM(tape, 20);
   const jazz = new Jazz(['organ', 'bass', 'brass', 'bass']);
 
   // Function that displays the current state of the tap in an HTML div
