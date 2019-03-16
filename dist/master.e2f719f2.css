@@ -1,0 +1,12 @@
+.button {
+    margin-bottom: 1em;
+}
+
+.tape-display {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tape-display .tape-snapshot {
+    margin: 0 1em 1em 0;
+}
