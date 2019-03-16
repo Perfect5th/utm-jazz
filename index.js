@@ -20,26 +20,8 @@ for (let i = 0; i < 4; i++) {
 // - run the utm each time the button is pushed, then display tape
 document.addEventListener('DOMContentLoaded', () => {
   // Create a utm object with a machine table
-  const utm = new UTM({
-    0: {
-      0: {
-        write: 1,
-        move: directions.RIGHT,
-        state: 0
-      },
-      1: {
-        write: 2,
-        move: directions.DOWN,
-        state: 0
-      },
-      2: {
-        write: 0,
-        move: directions.LEFT,
-        state: 0
-      }
-    }
-  }, tape, 10);
-  const jazz = new Jazz(['organ', 'bass', 'chiptune', 'bass']);
+  const utm = new UTM(tape, 20, 2);
+  const jazz = new Jazz(['organ', 'bass', 'brass', 'bass']);
 
   // Function that displays the current state of the tap in an HTML div
   const tapeElement = () => {

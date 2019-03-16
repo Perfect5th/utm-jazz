@@ -1,29 +1,18 @@
+import MachineTable from '../machinetable';
 import {directions} from './directions';
 
 export default class UTM {
-  // REQUIRES plain Object machineTable of the shape
-  //          {
-  //            <state>:
-  //              <read_symbol>: {
-  //                write: <symbol>,
-  //                move: <direction>,
-  //                state: <state>
-  //              },
-  //              ...
-  //            },
-  //            ...
-  //          }
-  //          2D array tape
+  // REQUIRES 2D array tape
   //          positive int operationCount
-  constructor(machineTable, tape, operationCount) {
+  constructor(tape, operationCount, states = 4) {
     this.x = 0;
     this.y = 0;
 
-    this.machineTable = machineTable;
+    this.machineTable = new MachineTable(states);
     this.tape = tape;
     this.operationCount = operationCount;
 
-    this.state = parseInt(Object.keys(machineTable)[0], 10);
+    this.state = 0;
   }
 
   // MODIFIES: this
@@ -31,9 +20,13 @@ export default class UTM {
   begin() {
     for (let i = 0; i < this.operationCount; i++) {
       this.read();
-      this.write();
-      this.move();
-      this.changeState();
+
+      const {write, move, state} = this.machineTable.getInstruction(
+        this.state, this.lastRead);
+
+      this.write(write);
+      this.move(move);
+      this.changeState(state);
     }
   }
 
@@ -45,16 +38,14 @@ export default class UTM {
 
   // MODIFIES: this
   // EFFECTS: writes a symbol to the current tape location based on state.
-  write() {
-    const toWrite = this.machineTable[this.state][this.lastRead].write;
-
+  write(toWrite) {
     this.tape[this.y][this.x] = toWrite;
   }
 
   // MODIFIES: this
   // EFFECTS: moves on the tape in the direction given by current state.
-  move() {
-    switch (this.machineTable[this.state][this.lastRead].move) {
+  move(direction) {
+    switch (direction) {
       case directions.UP:
         return this.moveUp();
       case directions.RIGHT:
@@ -109,9 +100,7 @@ export default class UTM {
 
   // MODIFIES: this
   // EFFECTS: changes to new state as specified by current state.
-  changeState() {
-    const newState = this.machineTable[this.state][this.lastRead].state;
-
+  changeState(newState) {
     this.state = parseInt(newState, 10);
   }
 
