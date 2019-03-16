@@ -2,6 +2,7 @@ import Jazz, {NoteTranslator} from './jazz';
 import UTM, {directions} from './utm';
 
 const OUTPUT_CLASS = 'tape-snapshot';
+const TOTAL_BARS = 16;
 
 const tape = [];
 
@@ -24,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const jazz = new Jazz(['organ', 'bass', 'brass', 'bass']);
 
   // Function that displays the current state of the tap in an HTML div
-  const tapeElement = () => {
-    const element = utm.getTape().reduce((acc, row) => {
+  const tapeElement = staff => {
+    const element = staff.reduce((acc, row) => {
       const rowElement = document.createElement('div');
 
       rowElement.textContent = row.toString();
@@ -42,15 +43,28 @@ document.addEventListener('DOMContentLoaded', () => {
   // Run the utm every time the button is clicked, then display the new tape
   // state
   document.querySelector('#begin-button').addEventListener('click', () => {
-    utm.begin();
+    const staff = [];
 
-    const noteTranslator = new NoteTranslator(utm.getTape());
+    for (let i = 0; i < TOTAL_BARS; i++) {
+      utm.begin();
+
+      const tape = utm.getTape();
+      for (let j = 0; j < tape.length; j++) {
+        if (staff[j]) {
+          staff[j] = staff[j].concat(tape[j].slice());
+        } else {
+          staff[j] = tape[j].slice();
+        }
+      }
+    }
+
+    const noteTranslator = new NoteTranslator(staff);
     noteTranslator.translate();
     const freqs = noteTranslator.getFreq();
 
     jazz.play(freqs);
 
-    document.querySelector('#turing-tape').append(tapeElement());
+    document.querySelector('#turing-tape').append(tapeElement(staff));
   });
 
   // Display the initial tape state
