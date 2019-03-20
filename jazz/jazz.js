@@ -1,3 +1,5 @@
+import oscillators from 'web-audio-oscillators';
+
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 
 export default class Jazz {
@@ -9,6 +11,7 @@ export default class Jazz {
     this.playing = false;
 
     this.secondsPerNote = 0.25;
+    this.noteLength = 0.9;
     this.attack = 0.1;
   }
 
@@ -28,7 +31,7 @@ export default class Jazz {
   createOscillators(staff) {
     for (let i = 0; i < staff.length; i++) {
       const stem = staff[i];
-      const oscillator = this.context.createOscillator();
+      const oscillator = oscillators[this.oscillatorTypes[i]](this.context);
       const gainNode = this.context.createGain();
 
       oscillator.type = this.oscillatorTypes[i];
@@ -52,22 +55,44 @@ export default class Jazz {
         creationMethod = this.createTiedTone.bind(this);
       }
 
+      if (stem[i].frequency === 0) {
+        creationMethod = this.createRest.bind(this);
+      }
+
       creationMethod(oscillator, stem[i].frequency, i);
     }
+
+    this.createRest(oscillator, 0, stem.length);
   }
 
   // REQUIRES: oscillator, frequency: float, i: position
   // MODIFIES: oscillator
   // EFFECTS: adds an un-tied note tone to the oscillator
   createTone(oscillator, frequency, i) {
-    oscillator.gainNode.gain.linearRampToValueAtTime(0.01, i * this.secondsPerNote);
-    oscillator.gainNode.gain.linearRampToValueAtTime(1, (i + this.attack) * this.secondsPerNote);
+    const {gain} = oscillator.gainNode;
+
+    gain.linearRampToValueAtTime(0.001, i * this.secondsPerNote);
+    gain.linearRampToValueAtTime(1, (i + this.attack) * this.secondsPerNote);
+    gain.setValueAtTime(1, (i + this.noteLength) * this.secondsPerNote);
     oscillator.frequency.setValueAtTime(frequency, i * this.secondsPerNote);
     oscillator.stop((i + 1) * this.secondsPerNote);
   }
 
   createTiedTone(oscillator, frequency, i) {
+    const {gain} = oscillator.gainNode;
+
     oscillator.frequency.setValueAtTime(frequency, i * this.secondsPerNote);
+    gain.setValueAtTime(1, (i + this.noteLength) * this.secondsPerNote);
+    oscillator.stop((i + 1) * this.secondsPerNote);
+  }
+
+  // REQUIRES: oscillator, i: position
+  // MODIFIES: oscillator
+  // EFFECTS: adds silence/rest to the oscillator
+  createRest(oscillator, frequency, i) {
+    const {gain} = oscillator.gainNode;
+
+    gain.linearRampToValueAtTime(0.01, i * this.secondsPerNote);
     oscillator.stop((i + 1) * this.secondsPerNote);
   }
 
@@ -79,7 +104,11 @@ export default class Jazz {
     }
 
     this.oscillators = [];
-    this.context.suspend();
+
+    if (this.context) {
+      this.context.suspend();
+    }
+
     this.playing = false;
   }
 }
