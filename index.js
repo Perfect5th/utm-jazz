@@ -212,8 +212,7 @@ function removeImage() {
 function moveBar() {
   const bar = document.querySelector('#music-bar');
   let pos = 0;
-  move();
-  const loc = setInterval(move, 21);
+  const loc = setInterval(move, 23);
 
   function move() {
     const imgwidth = document.querySelector('#music-animation').clientWidth;
