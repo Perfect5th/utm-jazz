@@ -99,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   makeImage(staff);
   showInstruments(randomizerOptions);
+  showStates(randomizerOptions)
   jazz.play(freqs);
   moveBar();
 
@@ -113,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     removeImage();
     makeImage(staff);
     showInstruments(randomizerOptions);
+    showStates(randomizerOptions)
     jazz.play(freqs);
     moveBar();
   });
@@ -241,6 +243,7 @@ function resetAll(){
     newbar.id = "music-bar";
     musicsheet.appendChild(newbar); 
     jazz.stop(); 
+    resetStates()
 }
 
 function stop(jazz){
@@ -263,5 +266,12 @@ function showInstruments(userOptions){
     choseninstr.value = instr[i];
   }
 
+
+}
+
+function showStates(randomizerOptions){
+  const states = randomizerOptions.states;
+  const element = document.getElementById(`stateval`);
+  element.value = states;
 
 }
