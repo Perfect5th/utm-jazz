@@ -48,6 +48,16 @@ document.addEventListener('DOMContentLoaded', () => {
       stop(jazz);
     });
 
+    const replaybutton = document.querySelector("#replay-button");
+    replaybutton.addEventListener('click', () => {
+      jazz.stop();
+      removeImage();
+      makeImage(staff);
+      showInstruments(userOptions);
+      jazz.play(freqs);
+      moveBar();
+    });
+
     const reset = document.querySelector("#reset-button");
     reset.addEventListener('click', () => {
       jazz.stop();
@@ -95,6 +105,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const stopbutton = document.querySelector("#stop-button");
   stopbutton.addEventListener('click', () => {
     stop(jazz);
+  });
+
+  const replaybutton = document.querySelector("#replay-button");
+  replaybutton.addEventListener('click', () => {
+    jazz.stop();
+    removeImage();
+    makeImage(staff);
+    showInstruments(randomizerOptions);
+    jazz.play(freqs);
+    moveBar();
   });
 
   const reset = document.querySelector("#reset-button");
@@ -199,7 +219,7 @@ function removeImage(){
 function moveBar(){
   var bar = document.getElementById("music-bar");
   var pos = 0;
-  var loc = setInterval(move,24);
+  var loc = setInterval(move,23);
 
   function move(){
     var imgwidth = document.getElementById("music-animation").clientWidth
@@ -235,7 +255,13 @@ function stop(jazz){
 function showInstruments(userOptions){
   const instr = userOptions.instruments;
   for (let i = 0; i < instr.length; i++){
+
     var element = document.getElementById(`inst-${i}`);
     element.innerHTML = instr[i];
+
+    var choseninstr = document.getElementById(`instrument-${i}`)
+    choseninstr.value = instr[i];
   }
+
+
 }

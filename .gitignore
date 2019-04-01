@@ -1,4 +1,5 @@
 dist/
 .cache/
+.eslint.js
 node_modules/
 *.swp

@@ -28,7 +28,7 @@
     background: white;
     position: relative;
     left: 700px;
-    bottom: 475px;
+    bottom: 455px;
 }
 
 
@@ -89,7 +89,7 @@
     background: white;
     position: relative;
     left: 640px;
-    bottom: 904px;
+    bottom: 884px;
 }
 
 
@@ -105,8 +105,7 @@
 body { font-family: "Nunito", sans-serif; font-size: 20px; }
 a    { text-decoration: none; }
 
-#begin-button, #random-button, #reset-button, #stop-button
-{
+#begin-button, #random-button, #reset-button, #stop-button, #replay-button {
   text-transform: uppercase;
   letter-spacing: 2px;
   text-align: center;
@@ -140,9 +139,21 @@ a    { text-decoration: none; }
 #stop-button{
     background: rgb(238, 64, 64);
     border: 1px solid  rgb(238, 64, 64);
+    position: absolute;
+    margin-top: 700px;
+    margin-left: 5px;
 }
 
 #reset-button{
     background: rgb(64, 160, 238);
     border: 1px solid  rgb(64, 160, 238);
+    position: absolute;
+    margin-top: 700px;
+    margin-left: 275px;
+}
+
+#replay-button {
+    position: absolute;
+    margin-top: 700px;
+    margin-left: 140px;
 }

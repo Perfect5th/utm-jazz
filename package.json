@@ -12,6 +12,7 @@
   "author": "Mitchell Burton",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^5.16.0",
     "parcel-bundler": "^1.12.3"
   },
   "xo": {
