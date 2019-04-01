@@ -5,17 +5,23 @@ import UTM from "./utm";
 const TOTAL_BARS = 8;
 const MAXSTATES = 17;
 const MINSTATES = 1;
+const jazz = new Jazz();
+
 document.addEventListener('DOMContentLoaded', () => {
 
   const gobutton = document.querySelector("#begin-button");
   gobutton.addEventListener('click', () => {
+    //reset img and any sound
+    resetAll();
+
     //have utm play 
     const userOptions = getUserOptions();
     const tape = makeTape(); //empty tape 4x8 
     const utm = new UTM(tape, 20, userOptions.states);
-    const jazz = new Jazz(userOptions.instruments); 
+    jazz.oscillatorTypes = userOptions.instruments; 
     const staff = [];
 
+    
     for (let i = 0; i < TOTAL_BARS; i++) {
       utm.begin();      
 
@@ -33,26 +39,35 @@ document.addEventListener('DOMContentLoaded', () => {
     noteTranslator.translate();
     const freqs = noteTranslator.getFreq();
     makeImage(staff);
+    showInstruments(userOptions);
     jazz.play(freqs);
     moveBar();
     
+    const stopbutton = document.querySelector("#stop-button");
+    stopbutton.addEventListener('click', () => {
+      stop(jazz);
+    });
+
     const reset = document.querySelector("#reset-button");
     reset.addEventListener('click', () => {
       jazz.stop();
-      removeImage(staff);
+      removeImage();
     });
 
   });
 
   const randomizebutton = document.querySelector("#random-button");
   randomizebutton.addEventListener('click', () => {
+  //reset img and any sound
+  resetAll();
+  
   //have utm play with randomized instruments and states
-
   const randomizerOptions = getRandomizerOptions();
   const tape = makeTape(); //empty tape 4x8 
   const utm = new UTM(tape, 20, randomizerOptions.states);
-  const jazz = new Jazz(randomizerOptions.instruments); 
+  jazz.oscillatorTypes = randomizerOptions.instruments; 
   const staff = [];
+
 
   for (let i = 0; i < TOTAL_BARS; i++) {
     utm.begin();
@@ -73,13 +88,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const freqs = noteTranslator.getFreq();
 
   makeImage(staff);
+  showInstruments(randomizerOptions);
   jazz.play(freqs);
   moveBar();
+
+  const stopbutton = document.querySelector("#stop-button");
+  stopbutton.addEventListener('click', () => {
+    stop(jazz);
+  });
 
   const reset = document.querySelector("#reset-button");
     reset.addEventListener('click', () => {
       jazz.stop();
-      removeImage(staff);
+      removeImage();
     });
   });
 
@@ -166,17 +187,13 @@ function makeImage(staff) {
 }
 }
 
-function removeImage(staff){
-  var musicbar = document.getElementById("music-bar");
-  var newbar = musicbar.cloneNode(true);
-  musicbar.parentNode.replaceChild(newbar,musicbar);
-  newbar.style.left = "0px";
-  for (let y = 0; y < staff.length; y++){
-    var musicsheet = document.getElementById("music-animation");
-    musicsheet.parentNode.removeChild(musicsheet);
-    var divider = document.getElementById("sheet-divider");
-    divider.parentNode.removeChild(divider);
-    }
+function removeImage(){
+  resetAll();
+
+  for (let j = 0; j < 4; j++){
+    var instname = document.getElementById(`inst-${j}`);
+    instname.innerHTML = "";
+  }
   }
 
 function moveBar(){
@@ -186,11 +203,39 @@ function moveBar(){
 
   function move(){
     var imgwidth = document.getElementById("music-animation").clientWidth
-    if (pos == imgwidth){
+    if (pos == imgwidth) {
       clearInterval(loc);
     } else {
         pos++;
         bar.style.left = pos + "px";
     }
+  }
+}
+
+function resetAll(){
+  var musicsheet = document.getElementById("music-sheets");
+    while(musicsheet.firstChild){
+      musicsheet.removeChild(musicsheet.firstChild);
+    }
+    var newbar = document.createElement("div");
+    newbar.id = "music-bar";
+    musicsheet.appendChild(newbar); 
+    jazz.stop(); 
+}
+
+function stop(jazz){
+  jazz.stop();
+  var musicbar = document.getElementById("music-bar");
+  const pos = window.getComputedStyle(musicbar).getPropertyValue("margin-left");
+  var newbar = musicbar.cloneNode(true);
+  musicbar.parentNode.replaceChild(newbar,musicbar);
+  newbar.style.left = pos + "px";
+}
+
+function showInstruments(userOptions){
+  const instr = userOptions.instruments;
+  for (let i = 0; i < instr.length; i++){
+    var element = document.getElementById(`inst-${i}`);
+    element.innerHTML = instr[i];
   }
 }

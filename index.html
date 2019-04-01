@@ -15,7 +15,7 @@
         <p id = h3> Choose your instruments: </p>
         <select id="instrument-0">
 
-            <option value="chiptune">Chiptune</option>
+            <option value="chiptune" selected>Chiptune</option>
             <option value="brass">Brass</option>
             <option value="bass">Bass</option>
             <option value="organ">Organ</option>
@@ -24,7 +24,7 @@
         <select id="instrument-1">
 
             <option value="chiptune">Chiptune</option>
-            <option value="brass">Brass</option>
+            <option value="brass" selected>Brass</option>
             <option value="bass">Bass</option>
             <option value="organ">Organ</option>
         </select>
@@ -33,7 +33,7 @@
 
             <option value="chiptune">Chiptune</option>
             <option value="brass">Brass</option>
-            <option value="bass">Bass</option>
+            <option value="bass" selected>Bass</option>
             <option value="organ">Organ</option>
         </select>
 
@@ -42,7 +42,7 @@
             <option value="chiptune">Chiptune</option>
             <option value="brass">Brass</option>
             <option value="bass">Bass</option>
-            <option value="organ">Organ</option>
+            <option value="organ" selected>Organ</option>
         </select>
 
         <form> 
@@ -53,12 +53,21 @@
         </form>
             <button id="begin-button" class="button">Go</button> 
             <button id="random-button" class="button">Randomize</button>
+            <button id="stop-button" class="button">Stop</button> 
             <button id="reset-button" class="button">Reset</button>       
             <script src="./index.js"></script>
-          <div id="music-sheets">
+            <div id="music-sheets">
               <div id="sheet-divider"></div>
               <div id="music-bar"></div>
           </div>   
+
+          <div id="insts-used">
+              <p id= "inst-0"></p>
+              <p id= "inst-1"></p>
+              <p id= "inst-2"></p>
+              <p id= "inst-3"></p>
+        </div>
+          
           
         </head>            
 </body>
