@@ -45,6 +45,16 @@ document.addEventListener('DOMContentLoaded', () => {
       stop(jazz);
     });
 
+    const replaybutton = document.querySelector('#replay-button');
+    replaybutton.addEventListener('click', () => {
+      jazz.stop();
+      removeImage();
+      makeImage(staff);
+      showInstruments(userOptions);
+      jazz.play(freqs);
+      moveBar();
+    });
+
     const reset = document.querySelector('#reset-button');
     reset.addEventListener('click', () => {
       jazz.stop();
@@ -83,12 +93,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     makeImage(staff);
     showInstruments(randomizerOptions);
+    showStates(randomizerOptions);
     jazz.play(freqs);
     moveBar();
 
     const stopbutton = document.querySelector('#stop-button');
     stopbutton.addEventListener('click', () => {
       stop(jazz);
+    });
+
+    const replaybutton = document.querySelector('#replay-button');
+    replaybutton.addEventListener('click', () => {
+      jazz.stop();
+      removeImage();
+      makeImage(staff);
+      showInstruments(randomizerOptions);
+      showStates(randomizerOptions);
+      jazz.play(freqs);
+      moveBar();
     });
 
     const reset = document.querySelector('#reset-button');
@@ -105,10 +127,10 @@ function getUserOptions() {
     states: 4
   };
   userOptions.states = parseInt(document.querySelector('#stateval').value, 10);
-  console.log(userOptions);
 
   for (let i = 0; i < 4; i++) {
-    userOptions.instruments.push(document.querySelector(`#instrument-${i}`).value);
+    userOptions.instruments.push(
+      document.querySelector(`#instrument-${i}`).value);
   }
 
   return userOptions;
@@ -120,7 +142,6 @@ function getRandomizerOptions() {
     states: 4
   };
   randomizerOptions.states = Math.floor(Math.random() * MAXSTATES) + MINSTATES;
-  console.log(randomizerOptions);
 
   const instrumentsoptions = ['chiptune', 'brass', 'bass', 'organ'];
   for (let i = 0; i < 4; i++) {
@@ -191,7 +212,8 @@ function removeImage() {
 function moveBar() {
   const bar = document.querySelector('#music-bar');
   let pos = 0;
-  const loc = setInterval(move, 24);
+  move();
+  const loc = setInterval(move, 21);
 
   function move() {
     const imgwidth = document.querySelector('#music-animation').clientWidth;
@@ -231,5 +253,14 @@ function showInstruments(userOptions) {
   for (let i = 0; i < instr.length; i++) {
     const element = document.querySelector(`#inst-${i}`);
     element.innerHTML = instr[i];
+
+    const choseninstr = document.querySelector(`#instrument-${i}`);
+    choseninstr.value = instr[i];
   }
+}
+
+function showStates(randomizerOptions) {
+  const states = randomizerOptions.states;
+  const element = document.querySelector('#stateval');
+  element.value = states;
 }
