@@ -140,7 +140,7 @@ a    { text-decoration: none; }
     background: rgb(238, 64, 64);
     border: 1px solid  rgb(238, 64, 64);
     position: absolute;
-    margin-top: 700px;
+    margin-top: 680px;
     margin-left: 5px;
 }
 
@@ -148,12 +148,12 @@ a    { text-decoration: none; }
     background: rgb(64, 160, 238);
     border: 1px solid  rgb(64, 160, 238);
     position: absolute;
-    margin-top: 700px;
+    margin-top: 680px;
     margin-left: 275px;
 }
 
 #replay-button {
     position: absolute;
-    margin-top: 700px;
+    margin-top: 680px;
     margin-left: 140px;
 }
